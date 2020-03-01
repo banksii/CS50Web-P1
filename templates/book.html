@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    {{book.title}}
+{% endblock %}
+
+{% block body %}
+    <div style="height: 25px"></div>
+
+        <dl class="row">
+            <dt class="col-sm-3">Author:</dt>
+            <dd class="col-sm-9">{{book.author}}</dd>
+
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">{{book.title}}</dd>
+
+            <dt class="col-sm-3">Published</dt>
+            <dd class="col-sm-9">{{book.year}}</dd>
+
+            <dt class="col-sm-3">ISBN</dt>
+            <dd class="col-sm-9">{{book.isbn}}</dd>
+
+            <dt class="col-sm-3">goodreads.com rating</dt>
+            <dd class="col-sm-9">{{gr_rating}}&nbsp;from&nbsp;{{gr_count}}&nbsp;reviews</dd>                       
+        </dl>
+    <div style="height: 25px"></div>
+    <h2>Reviews</h2>
+    <form action="{{ url_for('review') }}" method="post">
+        <div class="form-group">
+            <label for="ReviewTextarea1">Leave a review for this book</label>
+            <textarea name="review" class="form-control" id="ReviewTextarea1" rows="3"></textarea>
+        </div>      
+        <div class="form-check form-check-inline">
+            Select a rating before submitting:&nbsp;&nbsp;
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio1" value=1>
+            <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio2" value=2>
+            <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value=3>
+            <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio4" value=4>
+            <label class="form-check-label" for="inlineRadio4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio5" value=5>
+            <label class="form-check-label" for="inlineRadio5">5</label>
+        </div>                
+        <input type="hidden" name="book_id" value="{{ book.id }}">
+        <button type="submit" class="btn btn-primary" id="submitbtn">Submit</button>
+    </form>
+    <hr/>
+    {% for review in reviews %}
+        <blockquote class="blockquote text-right">
+            <p class="mb-0">{{review.review}}</p>
+            <footer class="blockquote-footer">{{review.rating}}/5&nbsp;<cite title="Source Title">Anon.</cite></footer>
+        </blockquote>
+    {% endfor %}
+{% endblock %}

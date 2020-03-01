@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    Search
+{% endblock %}
+
+{% block body %}
+
+<form action="search" method="post">
+    <div class="form-group">
+        <label for="SearchBooks">Search books</label>
+        <input name ="search" type="search" class="form-control" id="SearchBooks" placeholder="Enter Title, Author or ISBN">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+<form>
+<div style="height: 25px"></div>
+{% if books %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">Title</th>
+                <th scope="col">Year</th>
+                <th scope="col">ISBN</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{book.author}}</td>
+                    <td><a href="{{ url_for('book', book_id=book.id) }}">{{book.title}}</a></td>
+                    <td>{{book.year}}</td>
+                    <td>{{book.isbn}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}
